@@ -1,0 +1,90 @@
+8.1:
+package oopproject;
+import java.io.FileReader;
+public class Reversefile8_1 {
+	    public static void main(String[] args) 
+	       {
+	          try
+	          {
+	        	  FileReader fr = new FileReader("E:\\file.txt");
+	  			String str = "";
+	  			int ch;
+	  			while ((ch = fr.read()) != -1)
+	  			{
+					str += Character.toString((char) ch);
+				}
+				System.out.println("Original String : " + str);
+				StringBuilder sb = new StringBuilder(str);
+				System.out.println("Reverse order : " + sb.reverse());
+				fr.close();
+	          }
+ 	          catch(Exception e){
+	              System.out.println("error"+e.getMessage());
+	          }
+	       }
+	}
+8.3
+package vjit;
+import java.io.*;
+
+import com.cg.eis.bean.Employee;
+
+
+public class Objectfile8_3 {
+
+	public static void main(String[] args)  throws Exception{
+		
+		
+		  
+		    
+		 
+		    	Objectfile8_3 objectIO = new Objectfile8_3();
+		 
+		       Employee e = new Employee();
+		       e.setId(1);
+		       e.setName("vinitha");
+		       e.setSalary(25000);
+		       e.setDesignation("manager");
+		       e.setInsurenceScheme("A");
+		       objectIO.WriteObjectToFile(e);
+		      // System.out.println(e.toString());
+		       objectIO.file1();
+		      
+		    }
+		 
+		    public  void WriteObjectToFile(Object emp) {
+		 
+		        try {
+		 
+		            FileOutputStream fileOut = new FileOutputStream("D://objectfile.txt");
+		            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+		            objectOut.writeObject(emp);
+		            objectOut.close();
+		          
+		            System.out.println("The Object  was succesfully written to a file");
+		 
+		        } catch (Exception ex) {
+		            ex.printStackTrace();
+		        }
+		    }
+		    
+		    public void file1() throws Exception
+		    {
+		    	File f=new File("D://objectfile.txt");
+		    	FileInputStream fr =new FileInputStream(f);
+		    	ObjectInputStream ois=new ObjectInputStream(fr);
+		    	//Employee emp= (Employee) new Employee();
+		    	System.out.println(ois.readObject());
+		    	
+		    	
+		    	/*int ch;
+		    	while((ch=fr.read())!=-1)
+		    	{
+		    		System.out.print((char) ch);
+		    	}*/
+		    	
+		    	
+		    }
+	}
+
+
