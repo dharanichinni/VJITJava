@@ -1,0 +1,112 @@
+
+4.1.DATABASE OBJECTS:
+====================
+1.create  table Customertable (CustomerId Number(5), Cust_Name varchar2(20) Not null,Address1 varchar2(30),Address2 varchar2(30));
+
+2.alter table Customertable RENAME column Cust_Name to CustomerName;
+
+3.A. alter table Customertable ADD Gender varchar2(1);
+     alter table Customertable ADD Age varchar2(3);
+     alter table Customertable ADD PhoneNo Number(10);
+  
+  B. alter table Customertable RENAME  to Cust_Table;
+
+4.insert into Cust_Table values(1000,'Allen','#115Chicago','#115Chicago','M','25',7878776);
+  insert into Cust_Table values(1001,'George','#116France','#116France','M','25',434524);
+  insert into Cust_Table values(1002,'Becker','#114NewYork','#114NewYork','M','45',431525);
+
+5.ALTER TABLE cust_table ADD CONSTRAINT CustId_Prim PRIMARY KEY(CustomerId);
+
+6.insert into Cust_Table values(1002,'John','#114Chicago','#114Chicago','M','45',439525);
+
+ERROR at line 1:
+ORA-00001: unique constraint (SYS.CUSTID_PRIM) violated
+
+7. ALTER TABLE cust_table DISABLE CONSTRAINT CustId_Prim;
+
+   insert into Cust_Table values(1002,'Becker','#114NewYork','#114NewYork','M','45',431525);
+   insert into Cust_Table values(1003,'Nanapatekar','#115India','#115India','M','45',431525);
+
+8.ALTER TABLE cust_table ENABLE CONSTRAINT CustId_Prim;
+
+ERROR at line 1:
+ORA-02437: cannot validate (SYS.CUSTID_PRIM) - primary key violated
+
+9. ALTER TABLE cust_table DROP CONSTRAINT CustId_Prim;
+
+10.TRUNCATE table Cust_table;
+
+11.alter table Cust_table ADD E_mail varchar2(30);
+
+14.drop table Cust_table;
+   
+  create  table CustomerMaster (CustomerId Number(5), CustomerName varchar2(30) Not null,Address1 varchar2(30) Not null,Address2 varchar2(30),Gender varchar2(1),Age Number(3),PhoneNo Number(10), CONSTRAINT CustId_PK PRIMARY KEY(CustomerId));
+
+15.create table AccountMaster(CustomerId Number(5), AccountNumber Number(10,2),AccountType char(3),LedgerBalance Number(10,2) Not null, CONSTRAINT Acc_PK PRIMARY KEY(AccountNumber),foreign key (CustomerId) References CustomerMaster (CustomerId));
+ 
+   CREATE SEQUENCE AccNumseq INCREMENT BY 1 START WITH 1 MAXVALUE 1000 NOCYCLE;
+
+17.insert into CustomerMaster values(1000,'Allen','#115 Chicago','#115 Chicago','M',25,7878776);
+   insert into CustomerMaster values(1001,'George','#116 France','#116 France','M',25,434524);
+   insert into CustomerMaster values(1002,'Becker','#114 New York','#114 New York','M',45,431525);
+
+18. alter table AccountMaster ADD CONSTRAINT ac_ty check(AccountType='NRI' or AccountType='IND');
+
+19.alter table AccountMaster ADD CONSTRAINT Balance_Check Check(LedgerBalance > 5000);
+
+20.
+
+21.create table AccountDetails as select * from AccountMaster;
+
+22. create view Acc_view as select c.CustomerId as CustomerCode, c.CustomerName as AccountHolderName, a.AccountNumber, a.AccountType as Type, a.LedgerBalance as Balance from AccountMaster a, CustomerMaster c where a.CustomerId=c.CustomerId;
+
+23.create VIEW vAccs_Dtls as select c.CustomerId, c.CustomerName from AccountMaster a, CustomerMaster c where a.CustomerId=c.CustomerId AND AccountType='IND' AND LedgerBalance<10000;
+
+24.create VIEW accsvm10 AS select * from AccountMaster WITH READ ONLY CONSTRAINT read_only;
+
+25. CREATE SEQUENCE Seq_Dept INCREMENT BY 10 START WITH 40 MAXVALUE 200 NOCYCLE;
+    
+26.  insert into Department_Master values(Seq_Dept.nextval,'deptg');
+     insert into Department_Master values(Seq_Dept.nextval,'depth');
+     insert into Department_Master values(Seq_Dept.nextval,'depti');
+     
+         select * from Department_Master;
+ OUTPUT:
+     DEPT_CODE DEPT_NAME
+    ------- --------------
+        31     depta
+        32     deptb
+        33     deptc
+        34     deptd
+        10     depte
+        20     deptf
+        40     deptg
+        50     depth 
+        60     depti
+27. DROP SEQUENCE Seq_Dept;
+
+28. create INDEX No_Name on Emp(Ename);
+    select * from Emp;
+
+    DROP INDEX No_Name;
+
+29.create SYNONYM synEmp FOR Emp;
+  
+30. select * from synEmp where job='Manager';
+
+31.create INDEX idx_emp_hiredate on Emp(HireDate);
+
+32.CREATE SEQUENCE Seq_Emp INCREMENT BY 10 START WITH 1001 MAXVALUE 2000 NOCYCLE;
+
+   insert into Emp values(Seq_Emp.nextval,'hanu','sales',110,'12-may-07',15000,6000,1);
+   insert into Emp values(Seq_Emp.nextval,'janu','product',131,'1-may-07',19000,9000,2);
+
+    select * from Emp;
+OUTPUT:
+    
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM   DEPTNO
+    ----- ---------- --------- ---------- --------- ---------- ---------------------
+      1001 hanu       sales            110 12-MAY-07      15000       6000     1
+        
+
+      1011 janu       product          131 01-MAY-07      19000       9000     2
