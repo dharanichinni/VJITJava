@@ -1,12 +1,60 @@
-Dynamic View Diagrams-Use Case Diagrams
+=================================================Questions=========================================================================
+Data Query Language
+1.List the Name and Designation code of the staff who have joined before Jan 2003 and whose salary range is between 12000 and 25000. Display the columns with user defined Column headers. Hint: Use As clause along with other operators
+2.List the staff code, name, and department number of the staff who have experience of 18 or more years and sort them based on their experience. 
+3.Display the staff details who do not have manager. Hint: Use is null  
+4.Display the Book details that were published during the period of 2001 to 2004. Also display book details with Book name having the character ‘&’ anywhere.
+List the names of the staff having ‘_’ character in their name.  
 
-1.1
-1. Cur_ICENTURIAN, Account Holder, Sav_ICENTURIAN, Email System are the actors in the above Use-case Diagram. 
-2. Email is acting as an interface between the server and the user.
-3. If the data sources were designed as apart of application, they would have acted as another actor on the server side.
-4. View account details, Request address change, View statements, View account summary, login, transfer funds, activate
-   destination account, create destination account
-   are the use cases invoked by Account Holder.
-5. Transfer fund has extension points. Create destination account, activate destination account are the extended use cases.
-6. No, this online system does not allow the user to pay insurance premiums. To allow the user to pay insurance premiums
-   a use class has to be created and connedted to the actor Account Holder.
+=================================================Answers==============================================================================
+
+1. select Staff_Name as Name , Design_code as Designation Id from Staff_Master where HireDate< '1-jan-2003' And  Staff_sal  between  12000 and 25000;
+NAME                                               DESIGNATIONID
+-------------------------------------------------- -------------
+jj_qq                                                         22
+
+2. select Staff_code Id, Staff_name Name, Dept_code DeptId from Staff_Master where Months_Between(SYSDATE,HireDate)>=216 order by HireDate;  
+
+        ID NAME                                                   DEPTID
+---------- -------------------------------------------------- ----------
+       501 jj_qq                                                      31
+       502 Rakesh_j                                                   33
+
+3. select * from Staff_Master where Mgr_code is null;
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE
+---------- -------------------------------------------------- -----------
+ DEPT_CODE HIREDATE  STAFF_DOB
+---------- --------- ---------
+STAFF_ADDRESS
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL
+---------- ----------
+       503 ben_tt                                                      23
+        32 06-SEP-08 05-FEB-90
+chennai
+                54000
+
+4. Select * from BOOK_MASTER Where BOOK_PUB_YEAR BETWEEN 2001 AND 2004 AND BOOK_NAME LIKE '%"&"%';
+ BOOK_CODE BOOK_NAME                                          BOOK_PUB_YEAR
+---------- -------------------------------------------------- -------------
+BOOK_PUB_AUTHOR
+--------------------------------------------------
+         3 c "&" c++                                                   2001
+hari
+
+5. Select Staff_Name FROM Staff_Master Where Staff_Name LIKE '%_%';
+STAFF_NAME
+--------------------------------------------------
+jj_qq
+Rakesh_j
+ben_tt
+
+
+
+
+
+
+
+
+

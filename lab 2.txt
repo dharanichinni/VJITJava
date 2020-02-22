@@ -1,13 +1,130 @@
-Lab 2
-2.1
-A. 
-1.DBAccount, Connection, Statement are the Objects that are part of the given Sequence Diagram.
-2.Bank System SubSystem Client is the source from where data is being retrieved.
-3.The Statement Class must execute the "executeQuery".
-4.The Sequence Diagram does not contain any error messages. If I would model this Sequence Diagram,
-  I would add a error message at the getAccounts(), if the data incurre is incorrect.
-B.
-1.TRUE.
-2.getSecurityClearance(userId) and determineAvailableReports() are the methods implemented by ReportingSystem.
-3.String is the return value of the method getAvailableReports().
-4.ReportingSystem is responsible for calling the operation determineAvailableReports().
+2.1.1
+
+select Staff_Name,Staff_sal,LPAD(Staff_sal,15,'$') from Staff_Master;
+
+STAFF_NAME                                          STAFF_SAL
+-------------------------------------------------- ----------
+LPAD(STAFF_SAL,15,'$')
+------------------------------------------------------------
+jj_qq                                                   19000
+$$$$$$$$$$19000
+
+Rakesh_j                                                74000
+$$$$$$$$$$74000
+
+ben_tt                                                  54000
+$$$$$$$$$$54000
+
+
+SQL> select Staff_Name,LPAD(Staff_sal,15,'$') from Staff_Master;
+
+STAFF_NAME
+--------------------------------------------------
+LPAD(STAFF_SAL,15,'$')
+------------------------------------------------------------
+jj_qq
+$$$$$$$$$$19000
+
+Rakesh_j
+$$$$$$$$$$74000
+
+ben_tt
+$$$$$$$$$$54000
+
+2.1.2
+SQL>select Student_name,to_char(Student_dob,'month,dd yyyy') from Student_Master where to_char(Student_dob,'day') like('%saturday%') or to_char(Student_dob,'day') like('%sunday%');
+
+STUDENT_NAME
+--------------------------------------------------
+TO_CHAR(STUDENT_DOB,'MONTH,DDYYYY')
+--------------------------------------------
+Ram
+january  ,25 1998
+
+Anna
+january  ,20 1996
+
+
+SQL> select Student_name,to_char(Student_dob,'month,dd yyyy'),to_char(Student_dob,'day') from Student_Master where to_char(Student_dob,'day') like('%friday%') or to_char(Student_dob,'day') like('%sunday%');
+
+STUDENT_NAME
+--------------------------------------------------
+TO_CHAR(STUDENT_DOB,'MONTH,DDYYYY')
+--------------------------------------------
+TO_CHAR(STUDENT_DOB,'DAY')
+------------------------------------
+Ram
+january  ,25 1998
+sunday
+
+Raju
+june     ,30 1995
+friday
+
+STUDENT_NAME
+--------------------------------------------------
+TO_CHAR(STUDENT_DOB,'MONTH,DDYYYY')
+--------------------------------------------
+TO_CHAR(STUDENT_DOB,'DAY')
+------------------------------------
+
+2.1.3
+SQL> select Staff_name,Round(MONTHS_BETWEEN(sysdate,hiredate),3) months_worked from Staff_Master order by hiredate;
+
+STAFF_NAME                                         MONTHS_WORKED
+-------------------------------------------------- -------------
+jj_qq                                                    348.176
+Rakesh_j                                                 283.725
+ben_tt                                                   136.596
+
+SQL> select Staff_name,Round(MONTHS_BETWEEN(sysdate,hiredate),1) months_worked from Staff_Master order by hiredate;
+
+STAFF_NAME                                         MONTHS_WORKED
+-------------------------------------------------- -------------
+jj_qq                                                      348.2
+Rakesh_j                                                   283.7
+ben_tt                                                     136.6
+
+SQL> select Staff_name,Round(MONTHS_BETWEEN(sysdate,hiredate),0) months_worked from Staff_Master order by hiredate;
+
+STAFF_NAME                                         MONTHS_WORKED
+-------------------------------------------------- -------------
+jj_qq                                                        348
+Rakesh_j                                                     284
+ben_tt                                                       137
+
+ select *  from Staff_master where to_char(hiredate,'month') like('%june%') and to_number(to_char(hiredate,'dd'))<=15;
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE
+---------- -------------------------------------------------- -----------
+ DEPT_CODE HIREDATE  STAFF_DOB
+---------- --------- ---------
+STAFF_ADDRESS
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL
+---------- ----------
+       502 Rakesh_j                                                    21
+        33 02-JUN-96 15-JUL-77
+hyderabad
+        19      74000
+
+ select staff_name,hiredate,to_char(hiredate,'day') day from staff_master order by day;
+
+STAFF_NAME                                         HIREDATE
+-------------------------------------------------- ---------
+DAY
+------------------------------------
+jj_qq                                              19-JAN-91
+saturday
+
+ben_tt                                             06-SEP-08
+saturday
+
+Rakesh_j                                           02-JUN-96
+sunday
+
+select instr('missiippi','i',1,3) from dual;
+
+INSTR('MISSIIPPI','I',1,3)
+--------------------------
+                         6
